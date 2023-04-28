@@ -1,30 +1,20 @@
-LETTER_NOTES = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'Bb', 'B')
-INT_NOTES = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+NOTES = ('C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B')
 results = []
 
-def integer_to_letter(int):
-    while int > 11:
-        int = int - 12
-    while int < 0:
-        int = int + 12
-    return LETTER_NOTES[int]
-
-def letter_to_integer(letter):
-    index = LETTER_NOTES.index(letter.upper())
-    return INT_NOTES[index]
-
 def transpose_note(note, semitones):
-    before_int = letter_to_integer(note)
-    after_int = before_int + semitones
-    after_letter = integer_to_letter(after_int)
-    return after_letter
+    note_index = NOTES.index(note.upper())
+    new_note = note_index + semitones
+    while new_note > 11:
+        new_note -= 12
+    while new_note < 0:
+        new_note += 12
+    return NOTES[new_note]
 
 def program():
     notes_str = input('\nEnter notes to be transposed seperated by spaces:\n\n')
     semitones = int(input('\nEnter transposition in semitones:\n\n'))
-    notes = notes_str.split(' ')
     result = []
-    for note in notes:
+    for note in notes_str.split(' '):
         result.append(transpose_note(note, semitones))
     results.append('\n%s ---> %s' % (notes_str.upper(), ' '.join(result)))
     print(''.join(results))
